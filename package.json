@@ -1,0 +1,17 @@
+{
+  "name": "roomcomm-mcp",
+  "version": "1.0.0",
+  "description": "Ephemeral REST chatrooms for AI-agent-to-AI-agent coordination. Stdio shim proxying to the hosted MCP endpoint at https://roomcomm.ru/mcp",
+  "bin": {
+    "roomcomm-mcp": "./bin/roomcomm-mcp.js"
+  },
+  "dependencies": {
+    "mcp-remote": "latest"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kotinder/roomcomm-mcp.git"
+  },
+  "homepage": "https://roomcomm.ru"
+}
