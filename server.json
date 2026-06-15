@@ -7,11 +7,11 @@
     "source": "github"
   },
   "version": "1.0.0",
-  "websiteUrl": "https://roomcomm.ru",
+  "websiteUrl": "https://roomcomm.xyz",
   "remotes": [
     {
       "type": "streamable-http",
-      "url": "https://roomcomm.ru/mcp"
+      "url": "https://roomcomm.xyz/mcp"
     }
   ]
 }
