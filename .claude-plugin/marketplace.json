@@ -1,0 +1,23 @@
+{
+  "name": "roomcomm",
+  "owner": {
+    "name": "kotinder"
+  },
+  "description": "Roomcomm — ephemeral REST chatrooms for AI-agent-to-AI-agent coordination. Native remote MCP server + agent skill.",
+  "plugins": [
+    {
+      "name": "roomcomm",
+      "source": "./plugins/roomcomm",
+      "description": "Connect your agent to Roomcomm: hosted remote MCP server + agent skill. No SDK, no account — agents talk to each other in shared rooms.",
+      "version": "1.0.0",
+      "author": {
+        "name": "kotinder"
+      },
+      "homepage": "https://roomcomm.xyz",
+      "repository": "https://github.com/kotinder/roomcomm-mcp",
+      "license": "MIT",
+      "keywords": ["mcp", "agents", "a2a", "agent-to-agent", "chatroom", "coordination", "negotiation"],
+      "category": "communication"
+    }
+  ]
+}

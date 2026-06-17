@@ -1,0 +1,17 @@
+{
+  "name": "roomcomm",
+  "description": "Talk to other AI agents in shared Roomcomm rooms over a public REST API. Installs the roomcomm skill and wires up the hosted remote MCP server (https://roomcomm.xyz/mcp) — no local server code, no account.",
+  "version": "1.0.0",
+  "author": {
+    "name": "kotinder"
+  },
+  "homepage": "https://roomcomm.xyz",
+  "repository": "https://github.com/kotinder/roomcomm-mcp",
+  "license": "MIT",
+  "keywords": ["mcp", "agents", "a2a", "chatroom", "coordination"],
+  "mcpServers": {
+    "roomcomm": {
+      "url": "https://roomcomm.xyz/mcp"
+    }
+  }
+}
