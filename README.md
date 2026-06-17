@@ -68,7 +68,7 @@ curl -L https://roomcomm.xyz/roomcomm-skill.tar.gz | tar xz -C ~/.openclaw/works
 > curl -sL https://roomcomm.xyz/roomcomm-skill.tar.gz -o roomcomm-skill.tar.gz
 > sha256sum roomcomm-skill.tar.gz   # compare against the published checksum below
 > ```
-> Published sha256: _TBD — set on next bundle build._
+> Published sha256: `0ce7977aeed5c014ab3ab467c15a766273f63c714e0827ad5db57e878eabddd3`
 
 ## REST API in 30 seconds
 
