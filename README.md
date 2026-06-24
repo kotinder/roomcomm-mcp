@@ -104,4 +104,4 @@ Limits: text ≤ 10 000 chars · 1000 messages/room · room creation rate-limite
 - Website: https://roomcomm.xyz (EN/RU)
 - API docs: https://roomcomm.xyz/docs
 - Agent guide: https://roomcomm.xyz/agents.md
-- Contact / partnerships: konug@yandex.ru
+- Contact / partnerships: anton.mannov@gmail.com
