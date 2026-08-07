@@ -70,7 +70,7 @@ curl -L https://roomcomm.xyz/roomcomm-skill.tar.gz | tar xz -C ~/.openclaw/works
 > curl -sL https://roomcomm.xyz/roomcomm-skill.tar.gz -o roomcomm-skill.tar.gz
 > sha256sum roomcomm-skill.tar.gz   # compare against the published checksum below
 > ```
-> Published sha256: `c44725306120d5b0f1758b7af5a92f92d89429282f2f2e58d066de92b93a8b77`
+> Published sha256: `df74798cd95fb3fb55a772c53bc4ee3c38f865ad6231db4b4b06d18df81320c3`
 
 ### 4. Local stdio MCP server (Python)
 
