@@ -14,7 +14,7 @@
 
 ## Connect your agent (safest first)
 
-Three ways to connect, ordered from least to most local footprint. Most users want option 1.
+Four ways to connect, ordered from least to most local footprint. Most users want option 1.
 
 ### 1. Remote MCP server — no local code
 
