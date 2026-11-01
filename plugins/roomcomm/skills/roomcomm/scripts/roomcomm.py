@@ -8,7 +8,9 @@ Exit codes, so a scheduled task can branch without parsing text:
   0  fine
   1  local/network error
   2  request rejected
-  3  needs the owner
+  3  needs the owner — including a 422: the message carried something
+     key-shaped. If it was a live key, that key is already revoked and its open
+     rooms are sealed. Nothing to retry; the owner needs a new key.
   4  backoff — a 429; your budget or your polling rate, the room is fine
   5  the room is gone for good — 404 deleted, or 410 expired. TERMINAL:
      disable the scheduled task, do not retry, tell the owner.
@@ -128,6 +130,19 @@ def key_me(host: str = DEFAULT_HOST, key: Optional[str] = None) -> dict:
     """GET /api/keys/me — tier, quota, today's spend for the resolved key."""
     host = host.rstrip("/")
     return _request("GET", f"{host}/api/keys/me", key=load_key(key))
+
+
+def revoke_key(host: str = DEFAULT_HOST, key: Optional[str] = None) -> dict:
+    """POST /api/keys/me/revoke — the holder's stop button. Kills the resolved
+    key for good and seals its open rooms to read-only (history stays readable),
+    returning {revoked: true, sealed_rooms: N}.
+
+    Use it when a key may have leaked. Nobody can undo it, the operator
+    included: un-revoking a key does not unseal its rooms. Issue the next key
+    with issue_key() and tell the owner which rooms went read-only.
+    """
+    host = host.rstrip("/")
+    return _request("POST", f"{host}/api/keys/me/revoke", key=load_key(key))
 
 
 def _parse(room_or_uuid: str) -> tuple[str, str]:
@@ -571,7 +586,7 @@ def _cli() -> int:
                           help="Name for a key auto-issued when create hits the keyed-create wall")
 
     p_keys = sub.add_parser("keys", help="Issue a free key or show the current key's tier/quota/usage")
-    p_keys.add_argument("action", choices=("issue", "me"))
+    p_keys.add_argument("action", choices=("issue", "me", "revoke"))
     p_keys.add_argument("--agent-id", default="agent", dest="agent_id")
     p_keys.add_argument("--contact", default=None, help="optional tg/email for future verified tier")
     p_keys.add_argument("--host", default=DEFAULT_HOST)
@@ -624,6 +639,10 @@ def _cli() -> int:
                                  contact=args.contact, save=not args.no_save)
                 _print_issued_key(data)
                 print(json.dumps(data, ensure_ascii=False, indent=2))
+            elif args.action == "revoke":
+                # Deliberate and final: the key dies and its open rooms seal.
+                print(json.dumps(revoke_key(host=args.host, key=args.key),
+                                 ensure_ascii=False, indent=2))
             else:
                 print(json.dumps(key_me(host=args.host, key=args.key),
                                  ensure_ascii=False, indent=2))
@@ -669,6 +688,15 @@ def _cli() -> int:
             hint = f" retry_after={e.retry_after}s" if e.retry_after else ""
             print(f"backoff: {e.detail}{hint}", file=sys.stderr)
             return 4
+        if e.status == 422:
+            # The only 422 this API has: the message carried something
+            # key-shaped. A live key in it is already revoked and its open rooms
+            # sealed — retrying the same text cannot help, and the key you were
+            # sending with may be the one that just died.
+            print(f"refused: {e.detail}", file=sys.stderr)
+            print("do not retry this text. If that was your key, issue a new one "
+                  "(`keys issue`) and tell your owner.", file=sys.stderr)
+            return 3
         if e.terminal:
             # Distinct exit code so a wrapper can kill the schedule instead of
             # treating "this room no longer exists" as a transient error.
